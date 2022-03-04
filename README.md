@@ -1,0 +1,3 @@
+# Validation repository for the contribution of the microserices 2022 conference. 
+
+This repository was created in the context of our paper "*Towards Viewpoint-Based Microservice Architecture Reconstruction*" for  the Microservices 2022 [International Conference on Microservices (Microservices 2022)](https://www.conf-micro.services/2022/). It can be used for the replication of our preliminary results in Section 4 ("Preliminary Results") of the paper. More specifically, the repository comprises the [LEMMA](https://github.com/SeelabFhdo/lemma) reconstructed models for all Lakeside Mutual microservices concerning their design, implementation, and operation. 

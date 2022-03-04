@@ -1,0 +1,17 @@
+import datatypes from "../domain/Customer.data" as Customer
+
+public functional microservice com.lakesidemutual.customermanagement.CustomerManagementApplication {
+    interface NotificationInformationHolder {
+        getNotifications( sync out ^list : unspecified);
+    }
+    interface InteractionLogInformationHolder {
+        getInteractionLog( sync out interactionLogAggregateRoot : Customer::Customer.InteractionLogAggregateRoot,  sync in customerId : Customer::Customer.CustomerId);
+        acknowledgeInteractions( sync out interactionLogAggregateRoot : Customer::Customer.InteractionLogAggregateRoot,  sync in customerId : Customer::Customer.CustomerId,  sync in interactionAcknowledgementDto : Customer::Customer.InteractionAcknowledgementDto);
+        broadcastNotifications();
+    }
+    interface CustomerInformationHolder {
+        getCustomers( sync out paginatedCustomerResponseDto : Customer::Customer.PaginatedCustomerResponseDto,  sync in filter : string,  sync inout integer : unspecified);
+        getCustomer( sync out customerDto : Customer::Customer.CustomerDto,  sync in customerId : Customer::Customer.CustomerId);
+        updateCustomer( sync out customerDto : Customer::Customer.CustomerDto,  sync in customerId : Customer::Customer.CustomerId,  sync in customerProfileDto : Customer::Customer.CustomerProfileDto);
+    }
+}

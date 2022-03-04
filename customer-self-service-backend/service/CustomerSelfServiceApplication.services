@@ -1,0 +1,27 @@
+import datatypes from "../domain/Customer.data" as Customer
+
+public functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServiceApplication {
+    interface UserInformationHolder {
+        getCurrentUser( sync out userResponseDto : Customer::Customer.UserResponseDto,  sync in authentication : unspecified);
+    }
+    interface AuthenticationController {
+        authenticationRequest( sync out authenticationResponseDto : Customer::Customer.AuthenticationResponseDto,  sync in authenticationRequestDto : Customer::Customer.AuthenticationRequestDto);
+        signupUser( sync out userResponseDto : Customer::Customer.UserResponseDto,  sync in signupRequestDto : Customer::Customer.SignupRequestDto);
+    }
+    interface InsuranceQuoteRequestCoordinator {
+        getInsuranceQuoteRequests( sync out ^list : unspecified);
+        getInsuranceQuoteRequest( sync out insuranceQuoteRequestDto : Customer::Customer.InsuranceQuoteRequestDto,  sync in authentication : unspecified,  sync in insuranceQuoteRequestId : long);
+        createInsuranceQuoteRequest( sync inout insuranceQuoteRequestDto : Customer::Customer.InsuranceQuoteRequestDto,  sync in authentication : unspecified);
+        respondToInsuranceQuote( sync out insuranceQuoteRequestDto : Customer::Customer.InsuranceQuoteRequestDto,  sync in authentication : unspecified,  sync in id : long,  sync in insuranceQuoteResponseDto : Customer::Customer.InsuranceQuoteResponseDto);
+    }
+    interface CustomerInformationHolder {
+        changeAddress( sync inout addressDto : Customer::Customer.AddressDto,  sync in customerId : Customer::Customer.CustomerId);
+        getCustomer( sync out customerDto : Customer::Customer.CustomerDto,  sync in authentication : unspecified,  sync in customerId : Customer::Customer.CustomerId);
+        registerCustomer( sync out customerDto : Customer::Customer.CustomerDto,  sync in authentication : unspecified,  sync in customerRegistrationRequestDto : Customer::Customer.CustomerRegistrationRequestDto);
+        getInsuranceQuoteRequests( sync out ^list : unspecified,  sync in customerId : Customer::Customer.CustomerId);
+        addHATEOASLinks( sync in customerDto : Customer::Customer.CustomerDto);
+    }
+    interface CityReferenceDataHolder {
+        getCitiesForPostalCode( sync out citiesResponseDto : Customer::Customer.CitiesResponseDto,  sync in postalCode : string);
+    }
+}

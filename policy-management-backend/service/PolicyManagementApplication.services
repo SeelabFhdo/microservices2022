@@ -1,0 +1,33 @@
+import datatypes from "../domain/Policy.data" as Policy
+
+public functional microservice com.lakesidemutual.policymanagement.PolicyManagementApplication {
+    interface InsuranceQuoteRequestProcessingResource {
+        getInsuranceQuoteRequests( sync out ^list : unspecified);
+        getInsuranceQuoteRequest( sync out insuranceQuoteRequestDto : Policy::Policy.InsuranceQuoteRequestDto,  sync in id : long);
+        respondToInsuranceQuoteRequest( sync out insuranceQuoteRequestDto : Policy::Policy.InsuranceQuoteRequestDto,  sync in id : long,  sync in insuranceQuoteResponseDto : Policy::Policy.InsuranceQuoteResponseDto);
+    }
+    interface RiskComputationService {
+        computeRiskFactor( sync out riskFactorResponseDto : Policy::Policy.RiskFactorResponseDto,  sync in riskFactorRequestDto : Policy::Policy.RiskFactorRequestDto);
+        getAge( sync out returnint : int,  sync in birthday : date);
+        computeRiskFactor( sync out returnint : int,  sync in age : int,  sync in postalCode : string);
+        computeAgeGroupRiskFactor( sync out returnint : int,  sync in age : int);
+        computeLocalityRiskFactor( sync out returnint : int,  sync in postalCodeStr : string);
+    }
+    interface CustomerInformationHolder {
+        getCustomers( sync out paginatedCustomerResponseDto : Policy::Policy.PaginatedCustomerResponseDto,  sync in filter : string,  sync inout integer : unspecified);
+        createPaginatedCustomerResponseDto( sync out paginatedCustomerResponseDto : Policy::Policy.PaginatedCustomerResponseDto,  sync in filter : string,  sync inout integer : unspecified,  sync in size : int,  sync in customerDto : unspecified);
+        addCustomerLinks( sync in customerDto : Policy::Policy.CustomerDto);
+        getCustomer( sync out customerDto : Policy::Policy.CustomerDto,  sync in customerIdDto : Policy::Policy.CustomerIdDto);
+        getPolicies( sync out ^list : unspecified,  sync in customerIdDto : Policy::Policy.CustomerIdDto,  sync in expand : string);
+        createPolicyDto( sync out policyDto : Policy::Policy.PolicyDto,  sync in policyAggregateRoot : Policy::Policy.PolicyAggregateRoot,  sync in expand : string);
+    }
+    interface PolicyInformationHolder {
+        createPolicy( sync out policyDto : Policy::Policy.PolicyDto,  sync in createPolicyRequestDto : Policy::Policy.CreatePolicyRequestDto,  sync in httpServletRequest : unspecified);
+        updatePolicy( sync out policyDto : Policy::Policy.PolicyDto,  sync in policyId : Policy::Policy.PolicyId,  sync in createPolicyRequestDto : Policy::Policy.CreatePolicyRequestDto,  sync in httpServletRequest : unspecified);
+        deletePolicy( sync out returnVoid : unspecified,  sync in policyId : Policy::Policy.PolicyId,  sync in httpServletRequest : unspecified);
+        createPolicyDtos( sync out policyDto : Policy::Policy.PolicyDto,  sync in PolicyAggregateRoot : unspecified,  sync in expand : string);
+        createPaginatedPolicyResponseDto( sync out paginatedPolicyResponseDto : Policy::Policy.PaginatedPolicyResponseDto,  sync inout integer : unspecified,  sync in expand : string,  sync in size : int,  sync in policyDto : unspecified);
+        getPolicies( sync out paginatedPolicyResponseDto : Policy::Policy.PaginatedPolicyResponseDto,  sync inout integer : unspecified,  sync in expand : string);
+        getPolicy( sync out policyDto : Policy::Policy.PolicyDto,  sync in policyId : Policy::Policy.PolicyId,  sync in expand : string);
+    }
+}
